@@ -27,7 +27,6 @@ public class ExpressionEvaluator {
       String tempToken = stringTokenizer.nextToken();
       if (number) {
         if (isNumber(tempToken)) tokens.add(tempToken);
-
         else throw new IllegalExpressionException(tokenTracker);
 
       } else {
@@ -35,7 +34,6 @@ public class ExpressionEvaluator {
         tempToken = convertFollowingOperators(tempToken);
 
         if (isOperator(tempToken)) tokens.add(tempToken);
-
         else throw new IllegalExpressionException(tokenTracker);
       }
       number = !number;
@@ -45,8 +43,8 @@ public class ExpressionEvaluator {
     return tokens;
   }
 
-  public List<String> getTokens () {
-      return expressionTokens;
+  public List<String> getTokens() {
+    return expressionTokens;
   }
 
   public String convertFollowingOperators(String operators) {
@@ -62,19 +60,30 @@ public class ExpressionEvaluator {
   }
 
   public int eval() {
-    return 1;
+    int result = Integer.parseInt(expressionTokens.get(0));
+    while (expressionTokens.size() > 2) {
+      result = simpleEval(1);
+      cleanUpExpression(result, 1);
+    }
+
+    return result;
   }
 
-  public int simpleEval() {
-    return -1;
+  public void cleanUpExpression(int result, int operatorIndex) {
+    expressionTokens.add(operatorIndex - 1, result + "");
+    for (int i = 0; i < 3; i++) expressionTokens.remove(operatorIndex);
   }
 
-  public int nextOperator() {
-    return 1;
+  public int simpleEval(int operatorIndex) {
+    int a = Integer.parseInt(expressionTokens.get(operatorIndex - 1));
+    int b = Integer.parseInt(expressionTokens.get(operatorIndex + 1));
+    char op = expressionTokens.get(operatorIndex).charAt(0);
+
+    return MathOperator.operate(a, b, op);
   }
 
   public boolean isNumber(String str) {
-    for (int i = 0; i < str.length(); i++) {
+    for (int i = 1; i < str.length(); i++) {
       if (!Character.isDigit(str.charAt(i))) return false;
     }
     return true;

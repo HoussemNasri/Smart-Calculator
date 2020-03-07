@@ -5,16 +5,9 @@ import calculator.exception.IllegalExpressionException;
 import java.util.*;
 
 public class Main {
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IllegalExpressionException {
       Main main = new Main();
     Scanner scanner = new Scanner(System.in);
-
-      try {
-          ExpressionEvaluator evaluator = new ExpressionEvaluator("2 ---- 1 ++ 5 --- 3");
-          System.out.println(evaluator.getTokens().toString());
-      } catch (IllegalExpressionException e) {
-          e.printStackTrace();
-      }
 
 
       boolean running= true;
@@ -51,7 +44,7 @@ public class Main {
       return manager;
   }
 
-  public boolean readUserInput(Scanner scanner) {
+  public boolean readUserInput(Scanner scanner) throws IllegalExpressionException {
     String line = scanner.nextLine();
 
     ICommand helpCo = new HelpCommand();
@@ -66,8 +59,8 @@ public class Main {
 
     if (line.isEmpty()) return true;
 
-    int[] input = lineToInteger(line);
-    System.out.println(sum(input));
+    ExpressionEvaluator evaluator = new ExpressionEvaluator(line);
+    System.out.println(evaluator.eval());
 
     return true;
   }

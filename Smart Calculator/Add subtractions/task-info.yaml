@@ -69,12 +69,9 @@ files:
 - name: src/calculator/ExpressionEvaluator.java
   visible: true
   learner_created: true
-- name: src/calculator/exception/IllegalOperatorException.java
-  visible: true
-  learner_created: true
 - name: src/calculator/exception/IllegalExpressionException.java
   visible: true
   learner_created: true
 feedback_link: https://hyperskill.org/projects/42/stages/223/implement
-status: Unchecked
+status: Solved
 record: 4
