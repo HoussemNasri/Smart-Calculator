@@ -1,4 +1,4 @@
-package calculator;
+package calculator.command;
 
 public interface ICommand {
   String getName();

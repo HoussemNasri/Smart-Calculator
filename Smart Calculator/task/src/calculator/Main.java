@@ -1,5 +1,9 @@
 package calculator;
 
+import calculator.command.CommandManager;
+import calculator.command.ExitCommand;
+import calculator.command.HelpCommand;
+import calculator.command.ICommand;
 import calculator.exception.IllegalExpressionException;
 
 import java.util.*;
@@ -47,22 +51,42 @@ public class Main {
   public boolean readUserInput(Scanner scanner) throws IllegalExpressionException {
     String line = scanner.nextLine();
 
-    ICommand helpCo = new HelpCommand();
-    ICommand exitCo = new ExitCommand();
-
-    if (line.equals(exitCo.getName())) return false;
-
-    if (line.equals(helpCo.getName())) {
-      System.out.println(helpCo.getDescription());
-      return true;
-    }
-
     if (line.isEmpty()) return true;
 
-    ExpressionEvaluator evaluator = new ExpressionEvaluator(line);
-    System.out.println(evaluator.eval());
+    if(line.charAt(0) == '/')
+        return readCommand(line);
+    else
+        return readExpression(line);
 
-    return true;
+  }
+
+  public boolean readCommand (String line) {
+      ICommand helpCo = new HelpCommand();
+      ICommand exitCo = new ExitCommand();
+
+      if (line.equals(exitCo.getName())) return false;
+
+      if (line.equals(helpCo.getName())) {
+          System.out.println(helpCo.getDescription());
+          return true;
+      }
+      System.out.println("Unknown command");
+      return true;
+  }
+
+  public boolean readExpression(String line) {
+      ExpressionEvaluator evaluator = null;
+      try{
+          evaluator = new ExpressionEvaluator(line);
+      }
+      catch (Exception e) {
+          System.out.println("Invalid expression");
+          return true;
+      }
+
+      System.out.println(evaluator.eval());
+
+      return true;
   }
 
   public int sum(int... vars) {

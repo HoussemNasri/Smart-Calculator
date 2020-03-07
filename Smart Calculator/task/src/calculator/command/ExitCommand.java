@@ -1,4 +1,4 @@
-package calculator;
+package calculator.command;
 
 public class ExitCommand implements ICommand{
     @Override

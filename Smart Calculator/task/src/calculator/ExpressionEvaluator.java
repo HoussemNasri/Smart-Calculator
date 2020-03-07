@@ -10,7 +10,7 @@ import java.util.StringTokenizer;
 public class ExpressionEvaluator {
   private List<String> expressionTokens;
   private String expression;
-  private char[] legalOperators = {'-', '+'};
+  private Character[] legalOperators = {'-', '+'};
 
   public ExpressionEvaluator(String expression) throws IllegalExpressionException {
     this.expressionTokens = new ArrayList<>();
@@ -93,8 +93,8 @@ public class ExpressionEvaluator {
     if (operator.length() > 1 || operator.isEmpty()) return false;
 
     Arrays.sort(legalOperators);
-
-    if (Arrays.binarySearch(legalOperators, operator.charAt(0)) != -1) return true;
+    List<Character> listOfOperators = Arrays.asList(legalOperators);
+    if (listOfOperators.indexOf(operator.charAt(0)) != -1) {return true;}
     return false;
   }
 }

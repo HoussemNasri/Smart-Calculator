@@ -1,4 +1,6 @@
-package calculator;
+package calculator.command;
+
+import calculator.command.ICommand;
 
 import java.util.ArrayList;
 import java.util.Arrays;
