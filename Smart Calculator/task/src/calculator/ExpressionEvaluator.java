@@ -1,6 +1,7 @@
 package calculator;
 
-import calculator.exception.IllegalExpressionException;
+
+import calculator.exception.InvalidExpression;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,13 +13,13 @@ public class ExpressionEvaluator {
   private String expression;
   private Character[] legalOperators = {'-', '+'};
 
-  public ExpressionEvaluator(String expression) throws IllegalExpressionException {
+  public ExpressionEvaluator(String expression) throws InvalidExpression {
     this.expressionTokens = new ArrayList<>();
     this.expression = expression;
     expressionTokens.addAll(tokenizer());
   }
 
-  public List<String> tokenizer() throws IllegalExpressionException {
+  public List<String> tokenizer() throws InvalidExpression {
     List<String> tokens = new ArrayList<>();
     StringTokenizer stringTokenizer = new StringTokenizer(expression);
     boolean number = true;
@@ -27,14 +28,14 @@ public class ExpressionEvaluator {
       String tempToken = stringTokenizer.nextToken();
       if (number) {
         if (isNumber(tempToken)) tokens.add(tempToken);
-        else throw new IllegalExpressionException(tokenTracker);
+        else throw new InvalidExpression();
 
       } else {
 
         tempToken = convertFollowingOperators(tempToken);
 
         if (isOperator(tempToken)) tokens.add(tempToken);
-        else throw new IllegalExpressionException(tokenTracker);
+        else throw new InvalidExpression();
       }
       number = !number;
       tokenTracker++;

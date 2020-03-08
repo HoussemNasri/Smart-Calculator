@@ -4,12 +4,13 @@ import calculator.command.CommandManager;
 import calculator.command.ExitCommand;
 import calculator.command.HelpCommand;
 import calculator.command.ICommand;
-import calculator.exception.IllegalExpressionException;
+import calculator.exception.InvalidExpression;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class Main {
-  public static void main(String[] args) throws IllegalExpressionException {
+  public static void main(String[] args) throws InvalidExpression {
       Main main = new Main();
     Scanner scanner = new Scanner(System.in);
 
@@ -23,32 +24,18 @@ public class Main {
     System.out.println("Bye!");
   }
 
-  public int[] lineToInteger(String line) {
-
-    StringTokenizer tokenizer = new StringTokenizer(line);
-    int[] input = new int[tokenizer.countTokens()];
-
-    int i = 0;
-    try {
-      while (tokenizer.hasMoreTokens())
-          input[i++] = Integer.parseInt(tokenizer.nextToken());
-
-    } catch (Exception e) {
-      input[i] = 0;
-    }
-
-    return input;
-  }
 
   public CommandManager createCommandManager () {
       CommandManager manager = new CommandManager();
       manager.addCommand(new HelpCommand());
       manager.addCommand(new ExitCommand());
+      String pattern = "\\w";
+      Pattern p = Pattern.compile(pattern);
 
       return manager;
   }
 
-  public boolean readUserInput(Scanner scanner) throws IllegalExpressionException {
+  public boolean readUserInput(Scanner scanner) throws InvalidExpression {
     String line = scanner.nextLine();
 
     if (line.isEmpty()) return true;
@@ -89,10 +76,5 @@ public class Main {
       return true;
   }
 
-  public int sum(int... vars) {
-    int sum = 0;
-    for (int i : vars) sum += i;
 
-    return sum;
-  }
 }
