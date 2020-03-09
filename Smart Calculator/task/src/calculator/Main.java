@@ -4,13 +4,15 @@ import calculator.command.CommandManager;
 import calculator.command.ExitCommand;
 import calculator.command.HelpCommand;
 import calculator.command.ICommand;
-import calculator.exception.InvalidExpression;
+import calculator.exception.IllegalExpressionException;
+import calculator.expression.ExpressionFactory;
+import calculator.expression.IExpression;
 
 import java.util.*;
-import java.util.regex.Pattern;
 
 public class Main {
-  public static void main(String[] args) throws InvalidExpression {
+    public static final HashMap<String, Integer> variables = new HashMap<>();
+  public static void main(String[] args) throws IllegalExpressionException {
       Main main = new Main();
     Scanner scanner = new Scanner(System.in);
 
@@ -25,56 +27,14 @@ public class Main {
   }
 
 
-  public CommandManager createCommandManager () {
-      CommandManager manager = new CommandManager();
-      manager.addCommand(new HelpCommand());
-      manager.addCommand(new ExitCommand());
-      String pattern = "\\w";
-      Pattern p = Pattern.compile(pattern);
 
-      return manager;
-  }
-
-  public boolean readUserInput(Scanner scanner) throws InvalidExpression {
+  public boolean readUserInput(Scanner scanner) throws IllegalExpressionException {
     String line = scanner.nextLine();
-
-    if (line.isEmpty()) return true;
-
-    if(line.charAt(0) == '/')
-        return readCommand(line);
-    else
-        return readExpression(line);
-
-  }
-
-  public boolean readCommand (String line) {
-      ICommand helpCo = new HelpCommand();
-      ICommand exitCo = new ExitCommand();
-
-      if (line.equals(exitCo.getName())) return false;
-
-      if (line.equals(helpCo.getName())) {
-          System.out.println(helpCo.getDescription());
-          return true;
-      }
-      System.out.println("Unknown command");
-      return true;
-  }
-
-  public boolean readExpression(String line) {
-      ExpressionEvaluator evaluator = null;
-      try{
-          evaluator = new ExpressionEvaluator(line);
-      }
-      catch (Exception e) {
-          System.out.println("Invalid expression");
-          return true;
-      }
-
-      System.out.println(evaluator.eval());
+      IExpression expression = ExpressionFactory.build(line);
+      if(expression != null) return expression.eval();
 
       return true;
-  }
 
+  }
 
 }

@@ -275,7 +275,7 @@ files:
       }
     }
   learner_created: true
-- name: src/calculator/exception/InvalidExpression.java
+- name: src/calculator/exception/IllegalExpressionException.java
   visible: true
   text: |
     package calculator.exception;
@@ -287,30 +287,6 @@ files:
         }
     }
   learner_created: true
-- name: src/calculator/exception/InvalidAssignment.java
-  visible: true
-  learner_created: true
-- name: src/calculator/exception/InvalidIdentifier.java
-  visible: true
-  learner_created: true
-- name: src/calculator/exception/UnknownCommand.java
-  visible: true
-  learner_created: true
-- name: src/calculator/exception/UnknownVariable.java
-  visible: true
-  learner_created: true
-- name: src/calculator/expression/lExpression.java
-  visible: true
-  learner_created: true
-- name: src/calculator/expression/VariableExpression.java
-  visible: true
-  learner_created: true
-- name: src/calculator/expression/ArithmeticExpression.java
-  visible: true
-  learner_created: true
-- name: src/calculator/expression/CommandExpression.java
-  visible: true
-  learner_created: true
 feedback_link: https://hyperskill.org/projects/42/stages/225/implement
-status: Unchecked
-record: -1
+status: Solved
+record: 6
